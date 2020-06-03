@@ -1,0 +1,65 @@
+@mixin clearfix {
+	&::after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin centerEl {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// Media Queries
+/*
+0-600px -> Phone
+600-900px -> Tablet potrait
+900-1200px -> Tablet landscape
+[1200-1800px]-> Our default style (desktop)
+0-600px -> Big desktop
+*/
+
+@mixin respond-phone {
+	@media (max-width: 600px) {
+		@content;
+	}
+}
+
+/* Breakpoint Argument choices -->
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER of making responsive : base +typograohy >general layouts + grid >Page layout+components
+1em =20px
+*/
+@mixin respond($breakpoint) {
+	@if $breakpoint==phone {
+		@media only screen and (max-width: 30em) {
+			//600px
+			@content;
+		}
+	}
+	@if $breakpoint==tab-port {
+		@media only screen and (max-width: 45em) {
+			//900px
+			@content;
+		}
+	}
+	@if $breakpoint==tab-land {
+		@media only screen and (max-width: 60em) {
+			//1200px
+			@content;
+		}
+	}
+	@if $breakpoint==big-desktop {
+		@media only screen and (min-width: 90em) {
+			// 1800px
+			@content;
+		}
+	}
+}

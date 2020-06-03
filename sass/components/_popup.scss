@@ -1,0 +1,113 @@
+.popup {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 1000;
+	transition: all 0.3s;
+
+	opacity: 0;
+	visibility: hidden;
+
+	// backdrop-filter doesn't support by many browser ...so we have to do this
+	@supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+		-webkit-backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
+		background-color: rgba(0, 0, 0, 0.6);
+	}
+
+	&__container {
+		@include centerEl;
+		width: 75%;
+		background-color: $color-white;
+		box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.6);
+		border-radius: 3px;
+		overflow: hidden;
+		display: table;
+
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(.25);
+		transition: all 0.4s ease-out 0.2s;
+
+		@include respond(tab-land) {
+			width: 90%;
+		}
+		@include respond(tab-port) {
+			display: table;
+		}
+	}
+	&__left {
+		width: 33.333333%;
+		display: table-cell;
+
+		@include respond(tab-land) {
+			width: 40%;
+		}
+		@include respond(tab-port) {
+			display: table-row;
+		}
+	}
+	&__right {
+		width: auto;
+		display: table-cell;
+		vertical-align: middle;
+		padding: 3rem 5rem;
+
+		@include respond(tab-port) {
+			//display: table-row;
+			text-align: center;
+			width: 70%;
+		}
+	}
+	&__img {
+		display: block;
+		width: 100%;
+
+		@include respond(tab-port) {
+			height: 22.5rem;
+			width: 50%;
+			display: inline-block;
+		}
+	}
+	&__text {
+		font-size: 1.4rem;
+		margin-bottom: 4rem;
+
+		column-count: 2;
+		column-gap: 4rem;
+		column-rule: 1px solid #eee;
+
+		-moz-hyphens: auto;
+		-webkit-hyphens: auto;
+		hyphens: auto;
+	}
+
+	// Open state
+	&:target {
+		opacity: 1;
+		visibility: visible;
+	}
+	&__close {
+		&:link,
+		&:visited {
+			font-size: 4rem;
+			color: $color-grey-dark-1;
+			position: absolute;
+			top: 2.5rem;
+			right: 2.5rem;
+			line-height: 1;
+			display: inline-block;
+			transition: all 0.3s;
+			text-decoration: none;
+		}
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	&:target &__container {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
